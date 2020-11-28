@@ -95,22 +95,28 @@ void cfcv(unsigned int nterm, unsigned long *a_arr, unsigned long *out) {
 
 
 void chsequl_usage(void) {
-    printf("usage: chsequl(upper_bool, p q n)\n");
+    printf("usage: chsequl(upper_bool, n, k, z)\n");
     printf("  Generates the upper or lower Christoffel word for p/q\n");
     printf("  upper_bool = type of word\n");
     printf("    1 = upper\n");
     printf("    0 = lower\n");
-    printf("  p = numerator\n");
-    printf("  q = denominator\n");
-    printf("  n = number of terms to generate, default=p+q\n");
+    printf("  n = number of pattern 'pulses'\n");
+    printf("  k = number of pattern 'onsets'\n");
+    printf("  p = numerator (derived from k)\n");
+    printf("  q = denominator (derived from n-k\n");
+    printf("  z = number of terms to generate, default=n\n");
 }
-BIT_ARRAY *chsequl(uint8_t upper, unsigned long p, unsigned long q, unsigned long _n) {
+BIT_ARRAY *chsequl(uint8_t upper, unsigned long n, unsigned long k, unsigned long z) {
+    unsigned long p = k;   // num_onsets
+    unsigned long q = n-k; // num_rests
     unsigned long a = p;
     unsigned long b = q;
-    unsigned long n = (_n>0) ? _n : p+q;
     unsigned long i = 0;
     BIT_ARRAY *ba;
-    
+
+    // update n according to 'optional' var z, number of terms
+    n = (z>0) ? z : p+q;
+
     ba = bit_array_create(n);
     do{
         // printf(argv[1][0]=='u' ? "1" : "0");

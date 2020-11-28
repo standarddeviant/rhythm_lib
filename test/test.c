@@ -1,12 +1,18 @@
 
 #include <rhythm.h>
-
+//  Compile
+//  gcc test.c ../src/*.c -I ../include -o rhythm_test && ./rhythm_test
 int main(void) {
-    rhythm_t rkick;
+    rhythm_t r;
 
-    // BIT_ARRAY *chsequl(uint8_t upper, unsigned long p, unsigned long q, unsigned long _n)
-    rkick.bits = chsequl(1, 8, 5, 0);
-    print_rhythm(&rkick);
+    // create Cuban Cinquillo
+    r.bits = chsequl(1, 8, 5, 0);
+    print_rhythm(&r);
+    bit_array_free(r.bits);
 
+    // create Cuban Tresillo
+    r.bits = chsequl(1, 8, 3, 0);
+    print_rhythm(&r);
+    bit_array_free(r.bits);
 
 }
