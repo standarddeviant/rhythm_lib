@@ -28,7 +28,7 @@ void rhythm_rotate_next_onset(rhythm_t *r);
 void rhythm_print(const char *desc, rhythm_t *r);
 void cfcv(unsigned int nterm, unsigned long *a_arr, unsigned long *out);
 BIT_ARRAY *chsequl(uint8_t upper, unsigned long p, unsigned long q, unsigned long _n);
-
+BIT_ARRAY * pfold(unsigned int n, unsigned int m, unsigned int f);
 
 
 typedef struct {

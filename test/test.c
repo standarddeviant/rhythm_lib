@@ -29,4 +29,16 @@ int main(void) {
     rhythm_rotate_next_onset(r);
     rhythm_print("Cuban Tresillo : ", r);
     bit_array_free(r->bits);
+    printf("\n");
+
+    // create Folding Algo(s)
+    r->bits = pfold(16, 1, 1);
+    rhythm_print("Folding(16,1,1) : ", r);
+    rhythm_rotate_next_onset(r);
+    rhythm_print("Folding(16,1,1) : ", r);
+    rhythm_rotate_next_onset(r);
+    rhythm_print("Folding(16,1,1) : ", r);
+    bit_array_free(r->bits);
+    printf("\n");
+
 }

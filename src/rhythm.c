@@ -57,8 +57,10 @@ void rhythm_print(const char *desc, rhythm_t *r) {
 /*
  *                            COPYRIGHT
  *
- *  cfcv.c
- *  chsequl.c
+ *  cfcv_usage and cvcf              from cfcv.c
+ *  chsequl_usage and chsequl        from chsequl.c
+ *  oddeven, pfold_usage, and pfold  from  pfold.c
+ * 
  *  Copyright (C) 2014 Exstrom Laboratories LLC
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -131,7 +133,7 @@ void chsequl_usage(void) {
     printf("  q = denominator (derived from n-k\n");
     printf("  z = number of terms to generate, default=n\n");
 }
-BIT_ARRAY *chsequl(uint8_t upper, unsigned long n, unsigned long k, unsigned long z) {
+BIT_ARRAY * chsequl(uint8_t upper, unsigned long n, unsigned long k, unsigned long z) {
     unsigned long p = k;   // num_onsets
     unsigned long q = n-k; // num_rests
     unsigned long a = p;
@@ -174,6 +176,43 @@ BIT_ARRAY *chsequl(uint8_t upper, unsigned long n, unsigned long k, unsigned lon
     } while(i<n);
 
     // printf("\n");
+    return ba;
+}
+
+// oddeven finds a and b such that n = 2^a * (2*b+1)
+void oddeven( unsigned int n, unsigned int *a, unsigned int *b) {
+    unsigned int k,l;
+
+    // two's complement of n = -n or ~n + 1
+    l = n & -n;  // this is 2^a
+    *b = (n / l - 1)/2;
+    for(k=0; l>1; ++k) l>>=1;
+    *a = k;
+    return;
+}
+void pfold_usage() {
+    printf("usage: pfold(n, m, f)\n");
+    printf("  Generates fold sequences.\n");
+    printf("  n = number of terms, 1,3,7,15,31,63,127,...\n");
+    printf("  m = number of bits\n");
+    printf("  f = function number 0 -> 2^m-1\n");
+}
+BIT_ARRAY * pfold(unsigned int n, unsigned int m, unsigned int f) {
+    unsigned int i, j, k;
+    unsigned int b;
+    BIT_ARRAY *ba = bit_array_create(n);
+    for(i=1; i<=n; ++i) {
+        oddeven(i, &k, &j);
+        k = k % m;
+        b =  f & (1 << k) ? 1 : 0;
+        if((2*j+1) % 4 > 1) b = 1 - b;
+        // printf("%u", b);
+
+        if(b)
+            bit_array_set_bit(ba, i-1);
+        else
+            bit_array_clear_bit(ba, i-1);
+    }
     return ba;
 }
 
