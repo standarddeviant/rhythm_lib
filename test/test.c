@@ -13,31 +13,34 @@ int main(void) {
 
     // create Cuban Tresillo
     r->bits = chsequl(1, 8, 3, 0);
-    rhythm_print("Cuban Tresillo : ", r);
+    printf("Cuban Tresillo, rotated 2, then 3\n");
+    rhythm_print("\0", r);
     rhythm_rotate(r, 2);
-    rhythm_print("Cuban Tresillo : ", r);
+    rhythm_print("\0", r);
     rhythm_rotate(r, 3);
-    rhythm_print("Cuban Tresillo : ", r);
+    rhythm_print("\0", r);
     bit_array_free(r->bits);
     printf("\n");
 
     // create Cuban Tresillo
     r->bits = chsequl(1, 8, 3, 0);
-    rhythm_print("Cuban Tresillo : ", r);
+    printf("Cuban Tresillo, rotated next onset twice\n");
+    rhythm_print("\0", r);
     rhythm_rotate_next_onset(r);
-    rhythm_print("Cuban Tresillo : ", r);
+    rhythm_print("\0", r);
     rhythm_rotate_next_onset(r);
-    rhythm_print("Cuban Tresillo : ", r);
+    rhythm_print("\0", r);
     bit_array_free(r->bits);
     printf("\n");
 
     // create Folding Algo(s)
     r->bits = pfold(16, 1, 1);
-    rhythm_print("Folding(16,1,1) : ", r);
+    printf("Folding(16,1,1) rotated next onset twice\n");
+    rhythm_print("\0", r);
     rhythm_rotate_next_onset(r);
-    rhythm_print("Folding(16,1,1) : ", r);
+    rhythm_print("\0", r);
     rhythm_rotate_next_onset(r);
-    rhythm_print("Folding(16,1,1) : ", r);
+    rhythm_print("\0", r);
     bit_array_free(r->bits);
     printf("\n");
 
