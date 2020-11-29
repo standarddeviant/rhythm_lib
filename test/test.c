@@ -3,16 +3,30 @@
 //  Compile
 //  gcc test.c ../src/*.c -I ../include -o rhythm_test && ./rhythm_test
 int main(void) {
-    rhythm_t r;
+    rhythm_t *r = rhythm_create(0);
+    r->bits = chsequl(1, 8, 5, 0);
 
     // create Cuban Cinquillo
-    r.bits = chsequl(1, 8, 5, 0);
-    print_rhythm(&r);
-    bit_array_free(r.bits);
+    rhythm_print("Cuban Cinquillo: ", r);
+    bit_array_free(r->bits);
+    printf("\n");
 
     // create Cuban Tresillo
-    r.bits = chsequl(1, 8, 3, 0);
-    print_rhythm(&r);
-    bit_array_free(r.bits);
+    r->bits = chsequl(1, 8, 3, 0);
+    rhythm_print("Cuban Tresillo : ", r);
+    rhythm_rotate(r, 2);
+    rhythm_print("Cuban Tresillo : ", r);
+    rhythm_rotate(r, 3);
+    rhythm_print("Cuban Tresillo : ", r);
+    bit_array_free(r->bits);
+    printf("\n");
 
+    // create Cuban Tresillo
+    r->bits = chsequl(1, 8, 3, 0);
+    rhythm_print("Cuban Tresillo : ", r);
+    rhythm_rotate_next_onset(r);
+    rhythm_print("Cuban Tresillo : ", r);
+    rhythm_rotate_next_onset(r);
+    rhythm_print("Cuban Tresillo : ", r);
+    bit_array_free(r->bits);
 }

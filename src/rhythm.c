@@ -6,7 +6,30 @@
 #include <bit_array.h>
 #include <rhythm.h>
 
-void print_rhythm(rhythm_t *r) {
+
+rhythm_t *rhythm_create(bit_index_t nbits) {
+    rhythm_t *r = calloc(1, sizeof(rhythm_t));
+    // TODO - report failed calloc
+    if(nbits)
+        r->bits = bit_array_create(nbits);
+    return r;
+}
+
+
+void rhythm_rotate(rhythm_t *r, bit_index_t rot) {
+    bit_array_cycle_right(r->bits, rot);
+}
+
+
+void rhythm_rotate_next_onset(rhythm_t *r) {
+    bit_index_t rot = 0;
+    char valid = bit_array_find_next_set_bit(r->bits, 1, &rot);
+    if(valid)
+        bit_array_cycle_right(r->bits, rot);
+}
+
+
+void rhythm_print(const char *desc, rhythm_t *r) {
     if(r == NULL) {
         printf("ERROR: rhthym_t *ptr = 0x%p == NULL (!!!)\n", (void *)r);
         return;
@@ -14,6 +37,7 @@ void print_rhythm(rhythm_t *r) {
     if(r->bits == NULL) {
         printf("ERROR: BIT_ARRAY *(r->bits) = NULL (!!!)\n");
     }
+    printf("%s", desc);
     for(int ix=0; ix<r->bits->num_of_bits; ix++) {
         printf("%c", 
             bit_array_get_bit(r->bits, ix) ?
@@ -22,6 +46,7 @@ void print_rhythm(rhythm_t *r) {
     }
     printf("\n");
 }
+
 
 /*
     Below rhythm creation functions are adapted from source code for the book
@@ -151,3 +176,4 @@ BIT_ARRAY *chsequl(uint8_t upper, unsigned long n, unsigned long k, unsigned lon
     // printf("\n");
     return ba;
 }
+
