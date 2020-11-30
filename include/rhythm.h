@@ -36,7 +36,7 @@ typedef struct {
     uint16_t reset_count;
     uint16_t num_rhythms;
     uint16_t _reserved;
-    rhythm_t *rhythms[];
+    rhythm_t **rhythms;
 } rhythm_set_t;
 
 
