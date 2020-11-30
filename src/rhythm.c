@@ -15,6 +15,14 @@ rhythm_t *rhythm_create(bit_index_t nbits) {
     return r;
 }
 
+// TODO - free?
+
+uint8_t rhythm_take(rhythm_t *r) {
+    uint8_t out = bit_array_get_bit(r->bits, r->ix);
+    r->ix = (r->ix + 1) % r->bits->num_of_bits;
+    return out;
+}
+
 
 void rhythm_rotate(rhythm_t *r, bit_index_t rot) {
     bit_array_cycle_right(r->bits, rot);
