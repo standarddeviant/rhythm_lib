@@ -108,6 +108,7 @@ void cfcv_usage(void) {
 void cfcv(unsigned int nterm, unsigned long *a_arr, unsigned long *out) {
     unsigned int i;
     unsigned long a, p0, p1, p2, q0, q1, q2;
+    p2=0; q2=0; /* mollify compiler */
 
     p0 = 0;
     p1 = 1;
